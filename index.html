@@ -244,7 +244,7 @@
                 category: "Bolsitas",
                 price: 1500,
                 description: "Bolsita de papel fotográfico 120g con sticker personalizable y cierre con cinta.",
-                image: "https://placehold.co/600x400/FFF0F7/5A3E4E?text=Bolsitas+Personalizadas"
+                image: "https://placehold.co/600x600/FFF0F7/5A3E4E?text=Bolsitas+Personalizadas"
             },
             {
                 id: 2,
@@ -252,7 +252,7 @@
                 category: "Decoraciones",
                 price: 3200,
                 description: "Guirnalda con el nombre festejado/a en papel ilustración de alta gramaje.",
-                image: "https://placehold.co/600x400/FFF0F7/5A3E4E?text=Banderin+Decorativo"
+                image: "https://placehold.co/600x600/FFF0F7/5A3E4E?text=Banderin+Decorativo"
             },
             {
                 id: 3,
@@ -260,7 +260,7 @@
                 category: "Souvenirs y Recuerdos",
                 price: 950,
                 description: "Llavero acrílico con dije personalizado e inicial en vinilo de corte.",
-                image: "https://placehold.co/600x400/FFF0F7/5A3E4E?text=Souvenir+Llavero"
+                image: "https://placehold.co/600x600/FFF0F7/5A3E4E?text=Souvenir+Llavero"
             },
             {
                 id: 4,
@@ -268,7 +268,7 @@
                 category: "Agendas y Cuadernos",
                 price: 8900,
                 description: "Tapa dura laminada brillante con elástico y planificadores semanales.",
-                image: "https://placehold.co/600x400/FFF0F7/5A3E4E?text=Agenda+Personalizada"
+                image: "https://placehold.co/600x600/FFF0F7/5A3E4E?text=Agenda+Personalizada"
             },
             {
                 id: 5,
@@ -276,7 +276,7 @@
                 category: "Invitaciones Digitales",
                 price: 2800,
                 description: "Formato Web/PDF interactivo con botón directo a Google Maps y confirmación RSVP.",
-                image: "https://placehold.co/600x400/FFF0F7/5A3E4E?text=Invitacion+Digital"
+                image: "https://placehold.co/600x600/FFF0F7/5A3E4E?text=Invitacion+Digital"
             },
             {
                 id: 6,
@@ -284,7 +284,7 @@
                 category: "Invitaciones Físicas",
                 price: 1800,
                 description: "Tarjeta impresa con sobre calado a láser y faja de papel vegetal.",
-                image: "https://placehold.co/600x400/FFF0F7/5A3E4E?text=Invitacion+Fisica"
+                image: "https://placehold.co/600x600/FFF0F7/5A3E4E?text=Invitacion+Fisica"
             }
         ];
 
@@ -325,10 +325,10 @@
                 const card = document.createElement('div');
                 card.className = "bg-white rounded-3xl border border-pastel-pink/20 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group";
                 
-                const img = p.image && p.image.trim() !== '' ? p.image : `https://placehold.co/600x400/FFF0F7/5A3E4E?text=${encodeURIComponent(p.name)}`;
+                const img = p.image && p.image.trim() !== '' ? p.image : `https://placehold.co/600x600/FFF0F7/5A3E4E?text=${encodeURIComponent(p.name)}`;
 
                 card.innerHTML = `
-                    <div class="relative aspect-video bg-pastel-pinkLight overflow-hidden">
+                    <div class="relative aspect-square bg-pastel-pinkLight overflow-hidden">
                         <img src="${img}" alt="${escapeHtml(p.name)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-pastel-text text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm border border-pastel-pink/20">
                             ${p.category}
@@ -464,7 +464,6 @@
             totalText.textContent = `$${Number(total).toLocaleString('es-AR')}`;
         }
 
-        // Envío Limpio por WhatsApp (Sin íconos/emojis en la lista)
         function sendWhatsAppOrder() {
             if (cart.length === 0) {
                 alert("Agrega al menos un producto al pedido para continuar.");
