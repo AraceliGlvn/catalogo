@@ -93,7 +93,7 @@
             <!-- Buscador en tiempo real -->
             <div class="relative max-w-md mx-auto">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-pastel-pinkDark text-sm"></i>
-                <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Buscar bolsitas, invitaciones, agendas..." class="w-full pl-10 pr-4 py-3 bg-white border border-pastel-pink/30 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-pastel-pink focus:border-transparent shadow-sm">
+                <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Buscar bolsitas, cajitas, milkbox..." class="w-full pl-10 pr-4 py-3 bg-white border border-pastel-pink/30 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-pastel-pink focus:border-transparent shadow-sm">
             </div>
         </div>
     </section>
@@ -102,7 +102,7 @@
         <!-- Filtro por Categorías -->
         <div class="flex items-center justify-start sm:justify-center overflow-x-auto pb-4 mb-8 space-x-2 no-scrollbar" id="categoryTabs">
             <button onclick="setCategory('todos')" class="category-btn active px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-pastel-text text-white shadow-sm">Todos los productos</button>
-            <button onclick="setCategory('Bolsitas')" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-white text-pastel-text hover:bg-pastel-pinkLight border border-pastel-pink/20">Bolsitas</button>
+            <button onclick="setCategory('Bolsitas y Cajitas')" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-white text-pastel-text hover:bg-pastel-pinkLight border border-pastel-pink/20">Bolsitas y Cajitas</button>
             <button onclick="setCategory('Decoraciones')" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-white text-pastel-text hover:bg-pastel-pinkLight border border-pastel-pink/20">Decoraciones</button>
             <button onclick="setCategory('Souvenirs y Recuerdos')" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-white text-pastel-text hover:bg-pastel-pinkLight border border-pastel-pink/20">Souvenirs y Recuerdos</button>
             <button onclick="setCategory('Agendas y Cuadernos')" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-white text-pastel-text hover:bg-pastel-pinkLight border border-pastel-pink/20">Agendas y Cuadernos</button>
@@ -182,7 +182,7 @@
                     <div>
                         <label class="block text-xs font-semibold text-stone-700 mb-1">Categoría *</label>
                         <select id="prodCategory" required class="w-full px-3 py-2 bg-white border border-stone-200 rounded-xl text-xs focus:ring-2 focus:ring-pastel-pink focus:outline-none">
-                            <option value="Bolsitas">Bolsitas</option>
+                            <option value="Bolsitas y Cajitas">Bolsitas y Cajitas</option>
                             <option value="Decoraciones">Decoraciones</option>
                             <option value="Souvenirs y Recuerdos">Souvenirs y Recuerdos</option>
                             <option value="Agendas y Cuadernos">Agendas y Cuadernos</option>
@@ -241,52 +241,26 @@
             {
                 id: 1,
                 name: "Bolsitas 120gr",
-                category: "Bolsitas",
-                price: 1500,
-                description: "Precio por unidad. Personalizamos el diseño con la temática que elijas. Medidas aproximadas: 16 × 9 × 4,5 cm. Elaboradas en papel fotográfico brillante de 120g
-
-",
+                category: "Bolsitas y Cajitas",
+                price: 750,
+                description: "Precio por unidad. Personalizamos el diseño con la temática que elijas. Medidas aproximadas: 16×9×4,5 cm. Elaboradas en papel fotográfico brillante de 200g",
                 image: "https://creacionespersonalizadasarg.my.canva.site/fotos-catalogo/_assets/media/299b06e5da27a9abaea9b22d57326177.png"
             },
             {
                 id: 2,
-                name: "Banderines Cumpleaños Temático",
-                category: "Decoraciones",
-                price: 3200,
-                description: "Guirnalda con el nombre festejado/a en papel ilustración de alta gramaje.",
-                image: "https://placehold.co/600x600/FFF0F7/5A3E4E?text=Banderin+Decorativo"
+                name: "Bolsitas 200gr",
+                category: "Bolsitas y Cajitas",
+                price: 900,
+                description: "Precio por unidad. Personalizamos el diseño con la temática que elijas. Medidas aproximadas: 16×9×4,5 cm. Elaboradas en papel fotográfico brillante de 200g",
+                image: "https://creacionespersonalizadasarg.my.canva.site/fotos-catalogo/_assets/media/ce44bb8ae97e5a0f2ae1512209c10593.jpg"
             },
             {
                 id: 3,
-                name: "Souvenir Llavero Acrílico",
-                category: "Souvenirs y Recuerdos",
-                price: 950,
-                description: "Llavero acrílico con dije personalizado e inicial en vinilo de corte.",
-                image: "https://placehold.co/600x600/FFF0F7/5A3E4E?text=Souvenir+Llavero"
-            },
-            {
-                id: 4,
-                name: "Agenda Docente / Pedagógica 2026",
-                category: "Agendas y Cuadernos",
-                price: 8900,
-                description: "Tapa dura laminada brillante con elástico y planificadores semanales.",
-                image: "https://placehold.co/600x600/FFF0F7/5A3E4E?text=Agenda+Personalizada"
-            },
-            {
-                id: 5,
-                name: "Invitación Digital Interactiva WhatsApp",
-                category: "Invitaciones Digitales",
-                price: 2800,
-                description: "Formato Web/PDF interactivo con botón directo a Google Maps y confirmación RSVP.",
-                image: "https://placehold.co/600x600/FFF0F7/5A3E4E?text=Invitacion+Digital"
-            },
-            {
-                id: 6,
-                name: "Invitaciones Físicas Caladas",
-                category: "Invitaciones Físicas",
-                price: 1800,
-                description: "Tarjeta impresa con sobre calado a láser y faja de papel vegetal.",
-                image: "https://placehold.co/600x600/FFF0F7/5A3E4E?text=Invitacion+Fisica"
+                name: "Milkbox",
+                category: "Bolsitas y Cajitas",
+                price: 1000,
+                description: "Precio por unidad. Personalizamos el diseño con la temática que elijas. Medidas aproximadas: 16x7x7cm. Elaboradas en papel fotográfico brillante de 200g",
+                image: "https://creacionespersonalizadasarg.my.canva.site/fotos-catalogo/_assets/media/e3ab3d1a2922b71c08d6bd5ef36ca27c.jpg"
             }
         ];
 
