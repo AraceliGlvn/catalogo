@@ -78,4 +78,487 @@
     </header>
 
     <!-- Banner de Bienvenida -->
-    <section class="bg-gradient-to-b
+    <section class="bg-gradient-to-b from-pastel-pinkLight via-pastel-yellow/20 to-pastel-cream py-8 sm:py-12 px-4 border-b border-pastel-pink/10">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="inline-block px-3.5 py-1 rounded-full text-xs font-bold bg-pastel-yellow text-stone-700 mb-3 shadow-sm uppercase tracking-wider">
+                ✨ Catálogo Interactivo
+            </span>
+            <h2 class="font-brand text-2xl sm:text-4xl font-extrabold text-pastel-text mb-2">
+                Elige tus productos y arma tu pedido
+            </h2>
+            <p class="text-stone-600 text-xs sm:text-sm max-w-xl mx-auto mb-6">
+                Agrega lo que te guste al carrito, calcula el total estimado de tu compra y envíanos tu lista directamente por WhatsApp para coordinar los detalles.
+            </p>
+
+            <!-- Buscador en tiempo real -->
+            <div class="relative max-w-md mx-auto">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-pastel-pinkDark text-sm"></i>
+                <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Buscar bolsitas, cajitas, milkbox..." class="w-full pl-10 pr-4 py-3 bg-white border border-pastel-pink/30 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-pastel-pink focus:border-transparent shadow-sm">
+            </div>
+        </div>
+    </section>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Filtro por Categorías -->
+        <div class="flex items-center justify-start sm:justify-center overflow-x-auto pb-4 mb-8 space-x-2 no-scrollbar" id="categoryTabs">
+            <button onclick="setCategory('todos')" class="category-btn active px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-pastel-text text-white shadow-sm">Todos los productos</button>
+            <button onclick="setCategory('Bolsitas y Cajitas')" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-white text-pastel-text hover:bg-pastel-pinkLight border border-pastel-pink/20">Bolsitas y Cajitas</button>
+            <button onclick="setCategory('Decoraciones')" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-white text-pastel-text hover:bg-pastel-pinkLight border border-pastel-pink/20">Decoraciones</button>
+            <button onclick="setCategory('Souvenirs y Recuerdos')" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-white text-pastel-text hover:bg-pastel-pinkLight border border-pastel-pink/20">Souvenirs y Recuerdos</button>
+            <button onclick="setCategory('Agendas y Cuadernos')" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-white text-pastel-text hover:bg-pastel-pinkLight border border-pastel-pink/20">Agendas y Cuadernos</button>
+            <button onclick="setCategory('Invitaciones Digitales')" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-white text-pastel-text hover:bg-pastel-pinkLight border border-pastel-pink/20">Invitaciones Digitales</button>
+            <button onclick="setCategory('Invitaciones Físicas')" class="category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-white text-pastel-text hover:bg-pastel-pinkLight border border-pastel-pink/20">Invitaciones Físicas</button>
+        </div>
+
+        <!-- Grilla de Productos -->
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Carga dinámica -->
+        </div>
+
+        <!-- Estado vacío -->
+        <div id="emptyState" class="hidden text-center py-16">
+            <div class="w-16 h-16 bg-pastel-pinkLight rounded-full flex items-center justify-center mx-auto mb-3 text-pastel-pinkDark text-2xl">
+                <i class="fa-solid fa-face-sad-tear"></i>
+            </div>
+            <h3 class="font-brand font-bold text-lg text-pastel-text mb-1">No encontramos productos</h3>
+            <p class="text-xs text-stone-500">Prueba con otra búsqueda o cambia la categoría seleccionada.</p>
+        </div>
+    </main>
+
+    <!-- MODAL CARRITO DE COMPRAS -->
+    <div id="cartModal" class="fixed inset-0 z-50 bg-stone-900/40 backdrop-blur-sm hidden flex justify-end">
+        <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col justify-between animate-in slide-in-from-right duration-300">
+            <!-- Header Carrito -->
+            <div class="p-5 bg-pastel-pinkLight border-b border-pastel-pink/20 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-basket-shopping text-pastel-pinkDark text-lg"></i>
+                    <h3 class="font-brand font-bold text-lg text-pastel-text">Tu Pedido</h3>
+                </div>
+                <button onclick="toggleCartModal()" class="w-8 h-8 rounded-full bg-white text-stone-400 hover:text-stone-600 flex items-center justify-center shadow-sm">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Items Carrito -->
+            <div id="cartItemsList" class="p-5 flex-1 overflow-y-auto space-y-4">
+                <!-- Carga dinámica -->
+            </div>
+
+            <!-- Footer Carrito -->
+            <div class="p-5 bg-pastel-cream border-t border-pastel-pink/20 space-y-4">
+                <div class="flex justify-between items-center text-pastel-text">
+                    <span class="font-semibold text-sm">Total Estimado:</span>
+                    <span id="cartTotalText" class="font-brand font-extrabold text-2xl text-pastel-pinkDark">$0</span>
+                </div>
+                <button onclick="sendWhatsAppOrder()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-2xl shadow-md transition-all flex items-center justify-center space-x-2 text-sm">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Confirmar Pedido por WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ADMINISTRACIÓN -->
+    <div id="adminModal" class="fixed inset-0 z-50 bg-stone-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-pastel-pink/20 p-6 sm:p-8">
+            <div class="flex items-center justify-between pb-4 border-b border-stone-100 mb-6">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-gear text-pastel-pinkDark"></i>
+                    <h3 class="font-brand font-bold text-xl text-pastel-text">Panel de Administración</h3>
+                </div>
+                <button onclick="closeAdminModal()" class="w-8 h-8 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-500 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="addProductForm" onsubmit="handleProductSubmit(event)" class="space-y-4 mb-8 bg-pastel-pinkLight/50 p-5 rounded-2xl border border-pastel-pink/20">
+                <h4 class="font-bold text-xs uppercase tracking-wider text-pastel-pinkDark mb-2">Agregar Nuevo Producto</h4>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-stone-700 mb-1">Nombre del Producto *</label>
+                        <input type="text" id="prodName" required placeholder="Ej. Bolsita Golosinera Temática" class="w-full px-3 py-2 bg-white border border-stone-200 rounded-xl text-xs focus:ring-2 focus:ring-pastel-pink focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-stone-700 mb-1">Categoría *</label>
+                        <select id="prodCategory" required class="w-full px-3 py-2 bg-white border border-stone-200 rounded-xl text-xs focus:ring-2 focus:ring-pastel-pink focus:outline-none">
+                            <option value="Bolsitas y Cajitas">Bolsitas y Cajitas</option>
+                            <option value="Decoraciones">Decoraciones</option>
+                            <option value="Souvenirs y Recuerdos">Souvenirs y Recuerdos</option>
+                            <option value="Agendas y Cuadernos">Agendas y Cuadernos</option>
+                            <option value="Invitaciones Digitales">Invitaciones Digitales</option>
+                            <option value="Invitaciones Físicas">Invitaciones Físicas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-stone-700 mb-1">Precio en ARS ($) *</label>
+                        <input type="number" step="0.01" id="prodPrice" required placeholder="1500" class="w-full px-3 py-2 bg-white border border-stone-200 rounded-xl text-xs focus:ring-2 focus:ring-pastel-pink focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-stone-700 mb-1">URL de Imagen (Opcional)</label>
+                        <input type="url" id="prodImage" placeholder="https://..." class="w-full px-3 py-2 bg-white border border-stone-200 rounded-xl text-xs focus:ring-2 focus:ring-pastel-pink focus:outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-stone-700 mb-1">Descripción Breve</label>
+                    <textarea id="prodDesc" rows="2" placeholder="Detalles de tamaño, papel, etc..." class="w-full px-3 py-2 bg-white border border-stone-200 rounded-xl text-xs focus:ring-2 focus:ring-pastel-pink focus:outline-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-pastel-pink hover:bg-pastel-pinkDark text-white font-bold py-2.5 rounded-xl text-xs shadow-sm transition-all">
+                    + Guardar Producto en Catálogo
+                </button>
+            </form>
+
+            <div>
+                <h4 class="font-bold text-xs uppercase tracking-wider text-stone-600 mb-3">Productos Existentes</h4>
+                <div id="adminProductList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-stone-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-2 text-xs font-semibold">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+        <span id="toastMessage">Producto agregado al pedido</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-pastel-pink/20 py-6 mt-12 text-center text-xs text-stone-500">
+        <p class="font-brand font-semibold text-pastel-text">Creaciones Personalizadas</p>
+        <p class="mt-1">Diseño e impresiones para tus momentos especiales.</p>
+    </footer>
+
+    <script>
+        // Tu número de WhatsApp configurado
+        const WHATSAPP_NUMBER = "5491137755653"; 
+        const ADMIN_PASS = "creaciones123";
+
+        // PRODUCTOS REALES
+        const defaultProducts = [
+            {
+                id: 1,
+                name: "Bolsitas 120gr",
+                category: "Bolsitas y Cajitas",
+                price: 750,
+                description: "Precio por unidad. Personalizamos el diseño con la temática que elijas. Medidas aproximadas: 16×9×4,5 cm. Elaboradas en papel fotográfico brillante de 120g.",
+                image: "https://creacionespersonalizadasarg.my.canva.site/fotos-catalogo/_assets/media/299b06e5da27a9abaea9b22d57326177.png"
+            },
+            {
+                id: 2,
+                name: "Bolsitas 200gr",
+                category: "Bolsitas y Cajitas",
+                price: 900,
+                description: "Precio por unidad. Personalizamos el diseño con la temática que elijas. Medidas aproximadas: 16×9×4,5 cm. Elaboradas en papel fotográfico brillante de 200g.",
+                image: "https://creacionespersonalizadasarg.my.canva.site/fotos-catalogo/_assets/media/ce44bb8ae97e5a0f2ae1512209c10593.jpg"
+            },
+            {
+                id: 3,
+                name: "Milkbox",
+                category: "Bolsitas y Cajitas",
+                price: 1000,
+                description: "Precio por unidad. Personalizamos el diseño con la temática que elijas. Medidas aproximadas: 16x7x7cm. Elaboradas en papel fotográfico brillante de 200g.",
+                image: "https://creacionespersonalizadasarg.my.canva.site/fotos-catalogo/_assets/media/e3ab3d1a2922b71c08d6bd5ef36ca27c.jpg"
+            }
+        ];
+
+        let products = defaultProducts;
+        let cart = JSON.parse(localStorage.getItem('cp_cart')) || [];
+        let currentCategory = 'todos';
+
+        function saveProducts() {
+            localStorage.setItem('cp_products', JSON.stringify(products));
+        }
+
+        function saveCart() {
+            localStorage.setItem('cp_cart', JSON.stringify(cart));
+            updateCartBadge();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            const emptyState = document.getElementById('emptyState');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            grid.innerHTML = '';
+
+            const filtered = products.filter(p => {
+                const matchesCategory = currentCategory === 'todos' || p.category === currentCategory;
+                const matchesSearch = p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm);
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl border border-pastel-pink/20 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group";
+                
+                const img = p.image && p.image.trim() !== '' ? p.image : `https://placehold.co/600x600/FFF0F7/5A3E4E?text=${encodeURIComponent(p.name)}`;
+
+                card.innerHTML = `
+                    <div class="relative aspect-square bg-pastel-pinkLight overflow-hidden">
+                        <img src="${img}" alt="${escapeHtml(p.name)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-pastel-text text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm border border-pastel-pink/20">
+                            ${p.category}
+                        </span>
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <h3 class="font-brand font-bold text-pastel-text text-base mb-1">${escapeHtml(p.name)}</h3>
+                        <!-- DESCRIPCIÓN COMPLETA SE LEE DIRECTA -->
+                        <p class="text-xs text-stone-500 mb-4 leading-relaxed flex-1">${escapeHtml(p.description || '')}</p>
+                        
+                        <div class="pt-3 border-t border-pastel-pink/10 flex items-center justify-between mt-auto">
+                            <div>
+                                <span class="text-[10px] text-stone-400 block font-semibold uppercase">Precio</span>
+                                <span class="font-brand font-extrabold text-lg text-pastel-pinkDark">$${Number(p.price).toLocaleString('es-AR')}</span>
+                            </div>
+                            <button onclick="addToCart(${p.id})" class="bg-pastel-yellow hover:bg-pastel-yellowDark text-pastel-text font-bold text-xs px-3.5 py-2 rounded-xl transition-all shadow-sm flex items-center space-x-1.5">
+                                <i class="fa-solid fa-plus text-[10px]"></i>
+                                <span>Agregar</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                const btnText = btn.textContent.trim();
+                if((cat === 'todos' && btnText === 'Todos los productos') || btnText === cat) {
+                    btn.className = "category-btn active px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-pastel-text text-white shadow-sm";
+                } else {
+                    btn.className = "category-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all bg-white text-pastel-text hover:bg-pastel-pinkLight border border-pastel-pink/20";
+                }
+            });
+            renderProducts();
+        }
+
+        function filterProducts() {
+            renderProducts();
+        }
+
+        function addToCart(id) {
+            const prod = products.find(p => p.id === id);
+            if (!prod) return;
+
+            const itemInCart = cart.find(item => item.id === id);
+            if (itemInCart) {
+                itemInCart.quantity += 1;
+            } else {
+                cart.push({ ...prod, quantity: 1 });
+            }
+
+            saveCart();
+            showToast(`¡${prod.name} agregado al pedido!`);
+        }
+
+        function updateQuantity(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.id !== id);
+            }
+            saveCart();
+            renderCartItems();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            saveCart();
+            renderCartItems();
+        }
+
+        function updateCartBadge() {
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCountBadge').textContent = totalCount;
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                renderCartItems();
+            }
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cartItemsList');
+            const totalText = document.getElementById('cartTotalText');
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-stone-400">
+                        <i class="fa-solid fa-basket-shopping text-3xl mb-2 text-pastel-pink/50"></i>
+                        <p class="text-xs">Tu pedido está vacío.</p>
+                    </div>
+                `;
+                totalText.textContent = '$0';
+                return;
+            }
+
+            let total = 0;
+
+            cart.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+
+                const row = document.createElement('div');
+                row.className = "flex items-center justify-between p-3 bg-white rounded-2xl border border-pastel-pink/20 shadow-sm text-xs";
+                row.innerHTML = `
+                    <div class="flex-1 pr-2">
+                        <h4 class="font-bold text-pastel-text">${escapeHtml(item.name)}</h4>
+                        <span class="text-stone-400 text-[11px]">$${Number(item.price).toLocaleString('es-AR')} c/u</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="flex items-center bg-pastel-pinkLight rounded-xl border border-pastel-pink/20">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 flex items-center justify-center font-bold text-pastel-pinkDark hover:bg-pastel-pink/20 rounded-l-xl">-</button>
+                            <span class="px-2 font-bold text-pastel-text text-xs">${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 flex items-center justify-center font-bold text-pastel-pinkDark hover:bg-pastel-pink/20 rounded-r-xl">+</button>
+                        </div>
+                        <span class="font-brand font-bold text-pastel-pinkDark w-16 text-right">$${Number(subtotal).toLocaleString('es-AR')}</span>
+                        <button onclick="removeFromCart(${item.id})" class="text-stone-300 hover:text-red-400 p-1">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+
+            totalText.textContent = `$${Number(total).toLocaleString('es-AR')}`;
+        }
+
+        function sendWhatsAppOrder() {
+            if (cart.length === 0) {
+                alert("Agrega al menos un producto al pedido para continuar.");
+                return;
+            }
+
+            let message = `Hola Creaciones Personalizadas! Quisiera consultar/hacer el siguiente pedido:\n\n`;
+            
+            let total = 0;
+            cart.forEach((item) => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+                message += `- ${item.name} (Cantidad: ${item.quantity}) - $${item.price.toLocaleString('es-AR')} c/u - Subtotal: $${subtotal.toLocaleString('es-AR')}\n`;
+            });
+
+            message += `\nTotal del pedido: $${total.toLocaleString('es-AR')}`;
+
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        function promptAdminPassword() {
+            const pass = prompt("Ingresa la contraseña de administración:");
+            if (pass === ADMIN_PASS) {
+                openAdminModal();
+            } else if (pass !== null) {
+                alert("Contraseña incorrecta.");
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
+                promptAdminPassword();
+            }
+        });
+
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            renderAdminList();
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+            renderProducts();
+        }
+
+        function handleProductSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('prodName').value;
+            const category = document.getElementById('prodCategory').value;
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const image = document.getElementById('prodImage').value;
+            const description = document.getElementById('prodDesc').value;
+
+            const newProd = {
+                id: Date.now(),
+                name,
+                category,
+                price,
+                image,
+                description
+            };
+
+            products.unshift(newProd);
+            saveProducts();
+            document.getElementById('addProductForm').reset();
+            renderAdminList();
+            showToast("Producto guardado con éxito.");
+        }
+
+        function deleteProduct(id) {
+            if (confirm("¿Seguro que deseas eliminar este producto del catálogo?")) {
+                products = products.filter(p => p.id !== id);
+                saveProducts();
+                renderAdminList();
+                showToast("Producto eliminado.");
+            }
+        }
+
+        function renderAdminList() {
+            const container = document.getElementById('adminProductList');
+            container.innerHTML = '';
+
+            products.forEach(p => {
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between p-2.5 bg-stone-50 rounded-xl border border-stone-200 text-xs";
+                item.innerHTML = `
+                    <div class="truncate pr-2">
+                        <strong class="text-pastel-text block truncate">${escapeHtml(p.name)}</strong>
+                        <span class="text-[10px] text-stone-400">${p.category} - $${p.price}</span>
+                    </div>
+                    <button onclick="deleteProduct(${p.id})" class="text-red-400 hover:text-red-600 p-1.5 bg-white rounded-lg border border-stone-200">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text ? text.replace(/[&<>"']/g, m => map[m]) : '';
+        }
+
+        window.onload = function() {
+            renderProducts();
+            updateCartBadge();
+        };
+    </script>
+</body>
+</html>
