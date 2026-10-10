@@ -237,6 +237,7 @@
         const WHATSAPP_NUMBER = "5491137755653"; 
         const ADMIN_PASS = "creaciones123";
 
+        // SOLO TUS PRODUCTOS REALES
         const defaultProducts = [
             {
                 id: 1,
@@ -264,7 +265,8 @@
             }
         ];
 
-        let products = JSON.parse(localStorage.getItem('cp_products')) || defaultProducts;
+        // Forzamos la lista de productos por defecto
+        let products = defaultProducts;
         let cart = JSON.parse(localStorage.getItem('cp_cart')) || [];
         let currentCategory = 'todos';
 
